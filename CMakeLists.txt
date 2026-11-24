@@ -216,7 +216,9 @@ target_include_directories(d3d12x_device_slots_check PRIVATE src)
 target_compile_features(d3d12x_device_slots_check PRIVATE cxx_std_17)
 add_test(NAME d3d12x_device_slots COMMAND d3d12x_device_slots_check)
 add_test(NAME d3d12x_device_slots_device1_control COMMAND d3d12x_device_slots_check --mutate device1)
-set_tests_properties(d3d12x_device_slots_device1_control PROPERTIES WILL_FAIL TRUE)
+set_tests_properties(d3d12x_device_slots_device1_control PROPERTIES
+  PASS_REGULAR_EXPRESSION "FAIL ID3D12Device1: accepted=0, expected 1"
+  FAIL_REGULAR_EXPRESSION "usage:|d3d12x device slots: creation IIDs")
 
 # Fixture-only desktop xgameruntime.dll. The single X-macro table in
 # xgameruntime_shim.cpp distinguishes implemented synchronous contracts from
@@ -336,7 +338,9 @@ target_include_directories(startup_null_cause_labels_check PRIVATE src)
 target_compile_features(startup_null_cause_labels_check PRIVATE cxx_std_17)
 add_test(NAME startup_null_cause_labels COMMAND startup_null_cause_labels_check)
 add_test(NAME startup_null_cause_labels_buffer_token_control COMMAND startup_null_cause_labels_check --mutate buffer-token)
-set_tests_properties(startup_null_cause_labels_buffer_token_control PROPERTIES WILL_FAIL TRUE)
+set_tests_properties(startup_null_cause_labels_buffer_token_control PROPERTIES
+  PASS_REGULAR_EXPRESSION "startup_null_cause_labels: 6 of 14 FAILED"
+  FAIL_REGULAR_EXPRESSION "unknown mutation|startup_null_cause_labels: PASS")
 # The opt-in API trace reads only declared outputs; this checks the decision about what it observed
 # (argument index 0, two outputs, exact and short buffers, same value, partial comparison).
 add_executable(api_trace_check tests/api_trace_check.cpp)
